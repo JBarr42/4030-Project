@@ -30,13 +30,41 @@ d3.csv("4030 Visualization Data.csv").then(
         console.log(keys)
 
         var maxSum = d3.max(dataset, function(d){
-            var sumName = 0
+        var sumName = 0
             for(var i=0; i<keys.length; i++){
                 sumName = sumName + parseInt(d[keys[i]])
             }
 
             return sumName
         })
+
+        var yScale = d3.scaleLinear()
+                    .domain([0, maxSum])
+                    .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
+        
+        var stackedData = d3.stack()
+                            .keys(keys)
+                            (dataset)
+        
+        console.log(stackedData)
+
+        var bars = svg.append("g")
+                       .selectAll("g")
+                       .data(stackedData)
+                       .enter()
+                       .append("g")
+                       .attr("fill", d => colorScale(d.key))
+                       .selectAll("rect")
+                       .data(function(d){return d;})
+                       .enter()
+                       .append("rect")
+                       .attr("x", d => xScale(+d.data.year))
+                       .attr("y", d => yScale(d[1]))
+                       .attr("height", d => yScale(d[0]) - yScale(d[1]))
+                       .attr("width", d => xScale.bandwidth())
+                                          
+        console.log(bars)
+
 
 
     }
