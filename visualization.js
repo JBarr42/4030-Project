@@ -1,5 +1,5 @@
 
-d3.csv("stream-data.csv").then(
+d3.csv("4030 Visualization Data.csv").then(
     function(dataset){
         
         console.log(dataset)
@@ -15,7 +15,7 @@ d3.csv("stream-data.csv").then(
             }
         }
 
-        var svg = d3.select("#stackedbarchart")
+        var svg = d3.select("#visualization")
                     .style("width", dimensions.width)
                     .style("height", dimensions.height)
                     
