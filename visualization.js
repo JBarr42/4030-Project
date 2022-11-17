@@ -63,9 +63,13 @@ d3.csv("4030-visualization-data.csv").then(
                        .enter()
                        .append("rect")
                        .attr("x", d => xScale(+d.data.year))
+                       console.log(xScale)
                        .attr("y", d => yScale(d[1]))
+                       console.log(yScale)
                        .attr("height", d => yScale(d[0]) - yScale(d[1]))
+                       console.log(xScale)
                        .attr("width", d => xScale.bandwidth())
+                       console.log(yScale)
                                           
         console.log(bars)
 
