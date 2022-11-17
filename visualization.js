@@ -1,5 +1,5 @@
 
-d3.csv("4030 Visualization Data.csv").then(
+d3.csv("4030-visualization-data.csv").then(
     function(dataset){
         
         console.log(dataset)
