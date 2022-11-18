@@ -5,8 +5,8 @@ d3.csv("4030-visualization-data.csv").then(
         console.log(dataset)
 
         var dimensions = {
-            width: 1400,
-            height: 800,
+            width: 700,
+            height: 700,
             margin:{
                 top: 10,
                 bottom: 50,
@@ -41,10 +41,10 @@ d3.csv("4030-visualization-data.csv").then(
         var yScale = d3.scaleLinear()
                     .domain([0, maxSum])
                     .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
-       
+
         var colorScale = d3.scaleOrdinal()
                         .domain(keys)
-                        .range(["#b3e2cd","#fdcdac","#cbd5e8","#f4cae4","#e6f5c9","#fff2ae","#f1e2cc","#cccccc"])
+                        .range(["#b3e2cd","#fdcdac","#cbd5e8"])
         
         var stackedData = d3.stack()
                             .keys(keys)
@@ -63,16 +63,15 @@ d3.csv("4030-visualization-data.csv").then(
                        .enter()
                        .append("rect")
                        .attr("x", d => xScale(+d.data.year))
-                       console.log(xScale)
+                      // console.log(xScale)
                        .attr("y", d => yScale(d[1]))
-                       console.log(yScale)
+                       //console.log(yScale)
                        .attr("height", d => yScale(d[0]) - yScale(d[1]))
-                       console.log(xScale)
+                      // console.log(xScale)
                        .attr("width", d => xScale.bandwidth())
-                       console.log(yScale)
+                       //console.log(yScale)
                                           
         console.log(bars)
-
 
 
     }
