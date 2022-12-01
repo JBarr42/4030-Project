@@ -50,12 +50,12 @@ var Canon5 = dataset.filter(function(d){return d.Filler == "1" && d.Arc == "2"})
     var Arc4 = d3.group(dataset.filter(function(d){return d.Arc == "3"}), d => d.Filler)
     var Arc5 = d3.group(dataset.filter(function(d){return d.Arc == "4"}), d => d.Filler)
 console.log(Arc1)
-
+console.log(Arc1.keys())
 var tickLabels = ['Filler','Canon']
         var xScale = d3.scaleBand()
 
                         //.domain(d3.map(dataset.filter(function(d){return d.Arc == "0"}), d => d.Filler))
-                        .domain(Arc1.keys())
+                        .domain(tickLabels)
                         .range([dimensions.margin.left ,dimensions.width - dimensions.margin.right])
                         .padding(0.4)
 //xAxisGenerator.tickFormat((d,i) => tickLabels[i]);
@@ -85,9 +85,31 @@ console.log(Arc1.keys())
                         .attr("fill", d => "steelblue")
                         .attr("x", (d,i) => {
                                             console.log(d,i)
+                                            if(i == 0) {
+                                                console.log(xScale("Filler"))
+                                                return xScale("Filler")
+                                            }
+                                            if(i == 1) {
+                                               console.log(xScale("Canon"))
+                                               return xScale("Canon")
+                                            }
                                             console.log(xScale(i))
-                                            return xScale(d)})
-                        .attr("y", d => yScale(d))
+                                            
+                                            })
+                        //.attr("y", d => yScale(d))
+                        .attr("y", (d,i) => {
+                            console.log(d,i)
+                            // if(i == 0) {
+                            //     console.log(xScale("Filler"))
+                            //     return xScale("Filler")
+                            // }
+                            // if(i == 1) {
+                            //    console.log(xScale("Canon"))
+                            //    return xScale("Canon")
+                            // }
+                            console.log(xScale(i))
+                            
+                            return yScale(d)})
                         .attr("width", d => xScale.bandwidth())
                         .attr("height", function(d) {return dimensions.height - yScale((d))})
 //.attr("height", function(d) {return dimensions.height - yScale([66,46])})
