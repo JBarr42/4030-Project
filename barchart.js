@@ -43,20 +43,23 @@ var Canon5 = dataset.filter(function(d){return d.Filler == "1" && d.Arc == "2"})
     console.log(m1,m2)
 
    var Arc1 = d3.group(dataset.filter(function(d){return d.Arc == "0"}), d => d.Filler)
-   /* var Arc1 = d3.nest()
-    .key(m1)
-    .entries([Fillers1, Canon1])*/
+   var episodes1 = [m1, m2]
+   console.log(episodes1)
     var Arc2 = d3.group(dataset.filter(function(d){return d.Arc == "1"}), d => d.Filler)
     var Arc3 = d3.group(dataset.filter(function(d){return d.Arc == "2"}), d => d.Filler)
     var Arc4 = d3.group(dataset.filter(function(d){return d.Arc == "3"}), d => d.Filler)
     var Arc5 = d3.group(dataset.filter(function(d){return d.Arc == "4"}), d => d.Filler)
 console.log(Arc1)
 
+var tickLabels = ['Filler','Canon']
         var xScale = d3.scaleBand()
-                        .domain(d3.map(dataset.filter(function(d){return d.Arc == "0"}), d => d.Filler))
+
+                        //.domain(d3.map(dataset.filter(function(d){return d.Arc == "0"}), d => d.Filler))
+                        .domain(Arc1.keys())
                         .range([dimensions.margin.left ,dimensions.width - dimensions.margin.right])
                         .padding(0.4)
-
+//xAxisGenerator.tickFormat((d,i) => tickLabels[i]);
+//console.log(dataset.map(d => d.Filler ))
         var yScale = d3.scaleLinear()
                         .domain([0, d3.max([m1,m2,m3,m4,m5,m6,m7,m8,m9,m10])])
                         .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
@@ -73,20 +76,21 @@ console.log(Arc1)
                          .style("transform", `translateX(${dimensions.margin.left}px)`)
 
 
+console.log(Arc1.keys())
         var bars = svg.append("g")
                         .selectAll("g")
-                         .data(Arc1)
-                         .enter()
-                         .append("rect")
-                         .attr("fill", d => "steelblue")
-                         ///.selectAll("rect")
-                      //.data(function(d){return Arc1})
-                      //.enter()
-                      //.append("rect")
-                      .attr("x", d => xScale(+d.Filler))
-                      .attr("y", d => yScale(m1))
-                      .attr("width", d => xScale.bandwidth())
-                      .attr("height", function(d) {return dimensions.height - yScale(m1)})
+                        .data(episodes1)
+                        .enter()
+                        .append("rect")
+                        .attr("fill", d => "steelblue")
+                        .attr("x", (d,i) => {
+                                            console.log(d,i)
+                                            console.log(xScale(i))
+                                            return xScale(d)})
+                        .attr("y", d => yScale(d))
+                        .attr("width", d => xScale.bandwidth())
+                        .attr("height", function(d) {return dimensions.height - yScale((d))})
+//.attr("height", function(d) {return dimensions.height - yScale([66,46])})
 
                       console.log(bars)
     }
