@@ -209,7 +209,7 @@ var yAxis = svg.append("g")
 
         var colorScale = d3.scaleOrdinal()
         .domain(keys)
-        .range(["#F39C12 ", "#000000"])
+        .range(["#000000", "#FF5F1F" ])
 
         var bars = svg.append("g")
                        .selectAll("g")
@@ -221,6 +221,39 @@ var yAxis = svg.append("g")
                        .data(function(d){return d;})
                        .enter()
                        .append("rect")
+        var text = svg
+                .append('text')
+                .attr("id", 'topbartext')
+                .attr("x", 100)
+                .attr("y", 10)
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("font-family", "sans-serif")
+                .text("Canon Percentage: 0 %")
+
+    
+        var bars = svg.append("g")
+                       .selectAll("g")
+                       .data(stackedData)
+                       .enter()
+                       .append("g")
+                       .attr("fill", d => colorScale(d.key))
+                       .selectAll("rect")
+                       .data(function(d){return d;})
+                       .enter()
+                       .append("rect")
+                       .on('mouseover', function(d,i) {
+                        console.log(i)
+                        d3.select(this)
+                        .attr("stroke-width", 1.5)
+                        .attr("stroke", "black")
+                        text
+                            .text("Canon Percentage: " + (i[1] / (i[0] + i[1])).toFixed(2)+"%")
+                    })
+                    .on('mouseout', function(){
+                        d3.select(this)
+                        .attr("stroke-width", 0)
+                    })
                        .attr("x", (d,i) => {
                         if(i == 0){
                             return xScale("Arc 1")
