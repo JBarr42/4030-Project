@@ -323,7 +323,7 @@ var yAxis = svg.append("g")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
                 .attr("font-family", "sans-serif")
-                .text("Canon Percentage Per Arc: 0 %")
+                .text("Percentage Per Arc: 0 %")
 
         var bars = svg.append("g")
                        .selectAll("g")
@@ -341,13 +341,13 @@ var yAxis = svg.append("g")
                         .attr("stroke-width", 3.5)
                         .attr("stroke", "yellow")
                         text
-                            .text("Canon Percentage Per Arc: " + d3.format(".0%")(((i[1] - i[0]) / (d3.sum(i.data)))))
+                            .text("Percentage Per Arc: " + d3.format(".0%")(((i[1] - i[0]) / (d3.sum(i.data)))))
                     })
                     .on('mouseout', function(){
                         d3.select(this)
                         .attr("stroke-width", 0)
                         text
-                        .text("Canon Percentage Per Arc: " )
+                        .text("Percentage Per Arc: " )
 
                     })
                        .attr("x", (d,i) => {
