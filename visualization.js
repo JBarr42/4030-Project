@@ -68,31 +68,109 @@ var svg = d3.select("#linegraph")
 .style("width", dimensions.width)
 .style("height", dimensions.height)
 
-var canon07 = d3.group(dataset.filter(function(d){return d.Year == "2007" && d.Filler == '0'}))
-var c1 = d3.count(canon07, d => d.Episode)
-var canon08 = d3.group(dataset.filter(function(d){return d.Year == "2008" && d.Filler == '0'}))
-var c2 = d3.count(canon08, d => d.Episode)
-var canon09 = d3.group(dataset.filter(function(d){return d.Year == "2009" && d.Filler == '0'}))
-var c2 = d3.count(canon09, d => d.Episode)
-var canon10 = d3.group(dataset.filter(function(d){return d.Year == "2010" && d.Filler == '0'}))
-var c3 = d3.count(canon10, d => d.Episode)
-var canon11 = d3.group(dataset.filter(function(d){return d.Year == "2011" && d.Filler == '0'}))
-var c4 = d3.count(canon11, d => d.Episode)
-var canon12 = d3.group(dataset.filter(function(d){return d.Year == "2012" && d.Filler == '0'}))
-var c5 = d3.count(canon12, d => d.Episode)
-var canon13 = d3.group(dataset.filter(function(d){return d.Year == "2013" && d.Filler == '0'}))
-var c6 = d3.count(canon13, d => d.Episode)
-var canon14 = d3.group(dataset.filter(function(d){return d.Year == "2014" && d.Filler == '0'}))
-var c7 = d3.count(canon14, d => d.Episode)
-var canon15 = d3.group(dataset.filter(function(d){return d.Year == "2015" && d.Filler == '0'}))
-var c8 = d3.count(canon15, d => d.Episode)
-var canon16 = d3.group(dataset.filter(function(d){return d.Year == "2016" && d.Filler == '0'}))
-var c9 = d3.count(canon16, d => d.Episode)
-var canon17 = d3.group(dataset.filter(function(d){return d.Year == "2017" && d.Filler == '0'}))
-var c10 = d3.count(canon17, d => d.Episode)
 
-var canonYears = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10]
-console.log(canonYears)
+var all07 = d3.group(dataset.filter(function(d){return d.Year == "2007"}))
+var filler07 = d3.group(dataset.filter(function(d){return d.Year == "2007" && d.Filler == '1'}))
+var canon07 = d3.group(dataset.filter(function(d){return d.Year == "2007" && d.Filler == '0'}))
+var f1 = d3.count(filler07, d => d.Episode)
+var c1 = d3.count(canon07, d => d.Episode)
+var sum07 = d3.count(all07, d => d.Episode)
+var p1 = f1/sum07
+var pp1 = c1/sum07
+
+var all08 = d3.group(dataset.filter(function(d){return d.Year == "2008"}))
+var filler08 = d3.group(dataset.filter(function(d){return d.Year == "2008" && d.Filler == '1'}))
+var canon08 = d3.group(dataset.filter(function(d){return d.Year == "2008" && d.Filler == '0'}))
+var f2 = d3.count(filler08, d => d.Episode)
+var c2 = d3.count(canon08, d => d.Episode)
+var sum08 = d3.count(all08, d => d.Episode)
+var p2 = f2/sum08
+var pp2 = c2/sum08
+
+var all09 = d3.group(dataset.filter(function(d){return d.Year == "2009"}))
+var filler09 = d3.group(dataset.filter(function(d){return d.Year == "2009" && d.Filler == '1'}))
+var canon09 = d3.group(dataset.filter(function(d){return d.Year == "2009" && d.Filler == '0'}))
+var f3 = d3.count(filler09, d => d.Episode)
+var c3 = d3.count(canon09, d => d.Episode)
+var sum09 = d3.count(all09, d => d.Episode)
+var p3 = f3/sum09
+var pp3 = c3/sum09
+
+var all10 = d3.group(dataset.filter(function(d){return d.Year == "2010"}))
+var filler10 = d3.group(dataset.filter(function(d){return d.Year == "2010" && d.Filler == '1'}))
+var canon10 = d3.group(dataset.filter(function(d){return d.Year == "2010" && d.Filler == '0'}))
+var f4 = d3.count(filler10, d => d.Episode)
+var c4 = d3.count(canon10, d => d.Episode)
+var sum10 = d3.count(all10, d => d.Episode)
+var p4 = f4/sum10
+var pp4 = c4/sum10
+
+var all11 = d3.group(dataset.filter(function(d){return d.Year == "2011"}))
+var filler11 = d3.group(dataset.filter(function(d){return d.Year == "2011" && d.Filler == '1'}))
+var canon11 = d3.group(dataset.filter(function(d){return d.Year == "2011" && d.Filler == '0'}))
+var f5 = d3.count(filler11, d => d.Episode)
+var c5 = d3.count(canon11, d => d.Episode)
+var sum11 = d3.count(all11, d => d.Episode)
+var p5 = f5/sum11
+var pp5 = c5/sum11
+
+var all12 = d3.group(dataset.filter(function(d){return d.Year == "2012"}))
+var filler12 = d3.group(dataset.filter(function(d){return d.Year == "2012" && d.Filler == '1'}))
+var canon12 = d3.group(dataset.filter(function(d){return d.Year == "2012" && d.Filler == '0'}))
+var f6 = d3.count(filler12, d => d.Episode)
+var c6 = d3.count(canon12, d => d.Episode)
+var sum12 = d3.count(all12, d => d.Episode)
+var p6 = f6/sum12
+var pp6 = c6/sum12
+
+var all13 = d3.group(dataset.filter(function(d){return d.Year == "2013"}))
+var filler13 = d3.group(dataset.filter(function(d){return d.Year == "2013" && d.Filler == '1'}))
+var canon13 = d3.group(dataset.filter(function(d){return d.Year == "2013" && d.Filler == '0'}))
+var f7 = d3.count(filler13, d => d.Episode)
+var c7 = d3.count(canon13, d => d.Episode)
+var sum13 = d3.count(all13, d => d.Episode)
+var p7 = f7/sum13
+var pp7 = c7/sum13
+
+var all14 = d3.group(dataset.filter(function(d){return d.Year == "2014"}))
+var filler14 = d3.group(dataset.filter(function(d){return d.Year == "2014" && d.Filler == '1'}))
+var canon14 = d3.group(dataset.filter(function(d){return d.Year == "2014" && d.Filler == '0'}))
+var f8 = d3.count(filler14, d => d.Episode)
+var c8 = d3.count(canon14, d => d.Episode)
+var sum14 = d3.count(all14, d => d.Episode)
+var p8 = f8/sum14
+var pp8 = c8/sum14
+
+var all15 = d3.group(dataset.filter(function(d){return d.Year == "2015"}))
+var filler15 = d3.group(dataset.filter(function(d){return d.Year == "2015" && d.Filler == '1'}))
+var canon15 = d3.group(dataset.filter(function(d){return d.Year == "2015" && d.Filler == '0'}))
+var f9 = d3.count(filler15, d => d.Episode)
+var c9 = d3.count(canon15, d => d.Episode)
+var sum15 = d3.count(all15, d => d.Episode)
+var p9 = f9/sum15
+var pp9 = c9/sum15
+
+var all16 = d3.group(dataset.filter(function(d){return d.Year == "2016"}))
+var filler16 = d3.group(dataset.filter(function(d){return d.Year == "2016" && d.Filler == '1'}))
+var canon16 = d3.group(dataset.filter(function(d){return d.Year == "2016" && d.Filler == '0'}))
+var f10 = d3.count(filler16, d => d.Episode)
+var c10 = d3.count(canon16, d => d.Episode)
+var sum16 = d3.count(all16, d => d.Episode)
+var p10 = f10/sum16
+var pp10 = c10/sum16
+
+var all17 = d3.group(dataset.filter(function(d){return d.Year == "2017"}))
+var filler17 = d3.group(dataset.filter(function(d){return d.Year == "2017" && d.Filler == '1'}))
+var canon17 = d3.group(dataset.filter(function(d){return d.Year == "2017" && d.Filler == '0'}))
+var f11 = d3.count(filler17, d => d.Episode)
+var c11 = d3.count(canon17, d => d.Episode)
+var sum17 = d3.count(all17, d => d.Episode)
+var p11 = f11/sum17
+var pp11 = c11/sum17
+
+var Fpercentages = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10, p11]
+var Cpercentages = [pp1, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11]
+
 var lineTickLabels = ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"]
 var xScale = d3.scaleBand()
   .domain(lineTickLabels)
@@ -100,7 +178,7 @@ var xScale = d3.scaleBand()
   .padding(0.4)
 
 var yScale = d3.scaleLinear()
-  .domain([0, d3.max(canonYears)])
+  .domain([0, d3.max(Fpercentages)])
   .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
 
 //adds axes to the chart
@@ -114,12 +192,36 @@ var yAxis = svg.append("g")
       .call(yAxisGen)
       .style("transform", `translateX(${dimensions.margin.left}px)`)
      
+    options = ["Filler", "Canon"]
+      d3.select("#lineButton")
+      .selectAll('myOptions')
+      .data(options)
+      .enter()
+      .append('option')
+          .text(function (d) { return d; }) // text showed in the menu
+          .attr("value", function (d) { return d; }) // corresponding value returned by the button
+          
+          var myColor = d3.scaleOrdinal()
+          .domain(options)
+          .range(d3.schemeSet2);
+
+      var text = svg
+      .append('text')
+      .attr("id", 'topbartext')
+      .attr("x", 100)
+      .attr("y", 10)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("Filler Percentage Per Year")
+
+      console.log(Fpercentages)
 
       // Add the line
-    svg.append("path")
-    .datum(canonYears)
+    var line = svg.append("path")
+    .datum(Fpercentages)
     .attr("fill", "none")
-    .attr("stroke", "steelblue")
+    .attr("stroke", "black")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
       .x(function(d,i) {if(i == 0){
@@ -158,6 +260,8 @@ var yAxis = svg.append("g")
                     })
       .y(function(d) { return yScale(d) })
       )
+
+
 
 
 
@@ -219,8 +323,7 @@ var yAxis = svg.append("g")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
                 .attr("font-family", "sans-serif")
-                .text("Canon Percentage: 0 %")
-
+                .text("Canon Percentage Per Arc: 0 %")
 
         var bars = svg.append("g")
                        .selectAll("g")
@@ -233,16 +336,19 @@ var yAxis = svg.append("g")
                        .enter()
                        .append("rect")
                        .on('mouseover', function(d,i) {
-                        console.log(i)
+                        //console.log(d3.sum(i.data))
                         d3.select(this)
-                        .attr("stroke-width", 1.5)
-                        .attr("stroke", "black")
+                        .attr("stroke-width", 3.5)
+                        .attr("stroke", "yellow")
                         text
-                            .text("Canon Percentage: " + (i[1] / (i[0] + i[1])).toFixed(2)+"%")
+                            .text("Canon Percentage Per Arc: " + d3.format(".0%")(((i[1] - i[0]) / (d3.sum(i.data)))))
                     })
                     .on('mouseout', function(){
                         d3.select(this)
                         .attr("stroke-width", 0)
+                        text
+                        .text("Canon Percentage Per Arc: " )
+
                     })
                        .attr("x", (d,i) => {
                         if(i == 0){
@@ -272,6 +378,18 @@ var yAxis = svg.append("g")
         var svg = d3.select("#barchart")
                   .style("width", dimensions.width)
                   .style("height", dimensions.height)
+
+//add options to the button
+Arcs = ['Arc 1', 'Arc 2', 'Arc 3', 'Arc 4', 'Arc 5']
+var options = Arcs
+d3.select("#selectButton")
+                .selectAll('myOptions')
+                .data(options)
+                .enter()
+                .append('option')
+                    .text(function (d) { return d; }) // text showed in the menu
+                    .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
     
     var tickLabels = ['Filler','Canon']
     var xScale = d3.scaleBand()
@@ -294,16 +412,6 @@ var yAxis = svg.append("g")
                         .call(yAxisGen)
                         .style("transform", `translateX(${dimensions.margin.left}px)`)
 
-    //add options to the button
-    Arcs = ['Arc 1', 'Arc 2', 'Arc 3', 'Arc 4', 'Arc 5']
-    var options = Arcs
-    d3.select("#selectButton")
-                    .selectAll('myOptions')
-                    .data(options)
-                    .enter()
-                    .append('option')
-                        .text(function (d) { return d; }) // text showed in the menu
-                        .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
 
     var bars = svg.append("g")
@@ -324,12 +432,9 @@ var yAxis = svg.append("g")
                     .attr("width", d => xScale.bandwidth())
                     .attr("height", d => yScale(0) - yScale(d))
 
-   
-   
-   
-   
-   
-     // A function that update the chart
+    
+     
+                    // A function that update the chart
     function update(selectedGroup) {
     // Create new data with the selection
         if(selectedGroup == 'Arc 1'){
