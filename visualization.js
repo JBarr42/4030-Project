@@ -61,7 +61,105 @@ d3.csv("4030-visualization-data.csv").then(
     var colorScale5 = d3.scaleOrdinal()
                         .range(["#F4D03F", "#3498DB"])
 
-   
+  
+                        //LINE GRAPH
+
+var svg = d3.select("#linegraph")
+.style("width", dimensions.width)
+.style("height", dimensions.height)
+
+var canon07 = d3.group(dataset.filter(function(d){return d.Year == "2007" && d.Filler == '0'}))
+var c1 = d3.count(canon07, d => d.Episode)
+var canon08 = d3.group(dataset.filter(function(d){return d.Year == "2008" && d.Filler == '0'}))
+var c2 = d3.count(canon08, d => d.Episode)
+var canon09 = d3.group(dataset.filter(function(d){return d.Year == "2009" && d.Filler == '0'}))
+var c2 = d3.count(canon09, d => d.Episode)
+var canon10 = d3.group(dataset.filter(function(d){return d.Year == "2010" && d.Filler == '0'}))
+var c3 = d3.count(canon10, d => d.Episode)
+var canon11 = d3.group(dataset.filter(function(d){return d.Year == "2011" && d.Filler == '0'}))
+var c4 = d3.count(canon11, d => d.Episode)
+var canon12 = d3.group(dataset.filter(function(d){return d.Year == "2012" && d.Filler == '0'}))
+var c5 = d3.count(canon12, d => d.Episode)
+var canon13 = d3.group(dataset.filter(function(d){return d.Year == "2013" && d.Filler == '0'}))
+var c6 = d3.count(canon13, d => d.Episode)
+var canon14 = d3.group(dataset.filter(function(d){return d.Year == "2014" && d.Filler == '0'}))
+var c7 = d3.count(canon14, d => d.Episode)
+var canon15 = d3.group(dataset.filter(function(d){return d.Year == "2015" && d.Filler == '0'}))
+var c8 = d3.count(canon15, d => d.Episode)
+var canon16 = d3.group(dataset.filter(function(d){return d.Year == "2016" && d.Filler == '0'}))
+var c9 = d3.count(canon16, d => d.Episode)
+var canon17 = d3.group(dataset.filter(function(d){return d.Year == "2017" && d.Filler == '0'}))
+var c10 = d3.count(canon17, d => d.Episode)
+
+var canonYears = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10]
+console.log(canonYears)
+var lineTickLabels = ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017"]
+var xScale = d3.scaleBand()
+  .domain(lineTickLabels)
+  .range([dimensions.margin.left ,dimensions.width - dimensions.margin.right])
+  .padding(0.4)
+
+var yScale = d3.scaleLinear()
+  .domain([0, d3.max(canonYears)])
+  .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
+
+//adds axes to the chart
+var xAxisGen = d3.axisBottom().scale(xScale)
+var xAxis = svg.append("g")
+  .call(xAxisGen)
+  .style("transform", `translateY(${dimensions.height-dimensions.margin.bottom}px)`)
+
+var yAxisGen = d3.axisLeft().scale(yScale)
+var yAxis = svg.append("g")
+      .call(yAxisGen)
+      .style("transform", `translateX(${dimensions.margin.left}px)`)
+     
+
+      // Add the line
+    svg.append("path")
+    .datum(canonYears)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .x(function(d,i) {if(i == 0){
+                            return xScale("2007")
+                        }
+                        if(i == 1){
+                            return xScale("2008")
+                        }
+                        if(i == 2){
+                            return xScale("2009")
+                        }
+                        if(i == 3){
+                            return xScale("2010")
+                        }
+                        if(i == 4){
+                            return xScale("2011")
+                        }
+                        if(i == 5){
+                            return xScale("2012")
+                        }
+                        if(i == 6){
+                            return xScale("2013")
+                        }
+                        if(i == 7){
+                            return xScale("2014")
+                        }
+                        if(i == 8){
+                            return xScale("2015")
+                        }
+                        if(i == 9){
+                            return xScale("2016")
+                        }
+                        if(i == 10){
+                            return xScale("2017")
+                        }
+                    })
+      .y(function(d) { return yScale(d) })
+      )
+
+
 
     //STACKED BAR CHART
     var svg = d3.select("#visualization")
@@ -203,7 +301,12 @@ d3.csv("4030-visualization-data.csv").then(
                     .attr("width", d => xScale.bandwidth())
                     .attr("height", d => yScale(0) - yScale(d))
 
-    // A function that update the chart
+   
+   
+   
+   
+   
+     // A function that update the chart
     function update(selectedGroup) {
     // Create new data with the selection
         if(selectedGroup == 'Arc 1'){
@@ -257,14 +360,24 @@ d3.csv("4030-visualization-data.csv").then(
         .attr("height", d => yScale(0) - yScale(d))
   }
 
+
+
+
   // When the button is changed, run the updateChart function
   d3.select("#selectButton").on("change", function(d) {
     // recover the option that has been chosen
     var selectedOption = d3.select(this).property("value")
     // run the updateChart function with this selected option
     update(selectedOption)
+ // }
+  //)
+
+
+
   }
   )
+
+
 
     }
 )
