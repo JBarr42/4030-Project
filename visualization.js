@@ -211,16 +211,6 @@ var yAxis = svg.append("g")
         .domain(keys)
         .range(["#000000", "#FF5F1F" ])
 
-        var bars = svg.append("g")
-                       .selectAll("g")
-                       .data(stackedData)
-                       .enter()
-                       .append("g")
-                       .attr("fill", d => colorScale(d.key))
-                       .selectAll("rect")
-                       .data(function(d){return d;})
-                       .enter()
-                       .append("rect")
         var text = svg
                 .append('text')
                 .attr("id", 'topbartext')
@@ -231,7 +221,7 @@ var yAxis = svg.append("g")
                 .attr("font-family", "sans-serif")
                 .text("Canon Percentage: 0 %")
 
-    
+
         var bars = svg.append("g")
                        .selectAll("g")
                        .data(stackedData)
