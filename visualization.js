@@ -50,16 +50,7 @@ d3.csv("4030-visualization-data.csv").then(
     
     var Episodes = [episodes1, episodes2, episodes3, episodes4, episodes5]
 
-    var colorScale1 = d3.scaleOrdinal()
-                        .range(["#8E44AD", "#99A3A4"])
-    var colorScale2 = d3.scaleOrdinal()
-                        .range(["#A93226", "#F1948A"])
-    var colorScale3 = d3.scaleOrdinal()
-                        .range(["#34495E", "#0B5345"])
-    var colorScale4 = d3.scaleOrdinal()
-                        .range(["#943126 ", "#808B96"])
-    var colorScale5 = d3.scaleOrdinal()
-                        .range(["#F4D03F", "#3498DB"])
+   
 
   
                         //LINE GRAPH
@@ -323,7 +314,7 @@ var yAxis = svg.append("g")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
                 .attr("font-family", "sans-serif")
-                .text("Percentage Per Arc: 0 %")
+                .text("Canon Percentage Per Arc: 0 %")
 
         var bars = svg.append("g")
                        .selectAll("g")
@@ -341,13 +332,13 @@ var yAxis = svg.append("g")
                         .attr("stroke-width", 3.5)
                         .attr("stroke", "yellow")
                         text
-                            .text("Percentage Per Arc: " + d3.format(".0%")(((i[1] - i[0]) / (d3.sum(i.data)))))
+                            .text("Canon Percentage Per Arc: " + d3.format(".0%")(((i[1] - i[0]) / (d3.sum(i.data)))))
                     })
                     .on('mouseout', function(){
                         d3.select(this)
                         .attr("stroke-width", 0)
                         text
-                        .text("Percentage Per Arc: " )
+                        .text("Canon Percentage Per Arc: " )
 
                     })
                        .attr("x", (d,i) => {
@@ -371,31 +362,49 @@ var yAxis = svg.append("g")
                        .attr("height", d => yScale(d[0]) - yScale(d[1]))
                        .attr("width", d => xScale.bandwidth())
                                           
-        console.log(bars)
+    var size = 20
+    svg.selectAll("mydots")
+        .data(Episodes[1])
+        .enter()
+        .append("rect")
+        .attr("x", 430)
+        .attr("y", function(d,i){ return 10 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+        .attr("width", size)
+        .attr("height", size)
+        .style("fill", function(d){ return colorScale(d)})
+    
+    // Add one dot in the legend for each name.
+    svg.selectAll("mylabels")
+        .data(Episodes[1])
+        .enter()
+        .append("text")
+        .attr("x", 430 + size*1.2)
+        .attr("y", function(d,i){ return 10 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+        .style("fill", function(d){ return colorScale(d)})
+        .text(function(d,i){ if(i == 0){
+                                return "Filler"
+                            }
+                            if(i == 1){
+                                return "Canon"
+                            }           
+                            })
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
 
-    //BARCHART
+
+    //GROUPED BARCHART
 
         var svg = d3.select("#barchart")
                   .style("width", dimensions.width)
                   .style("height", dimensions.height)
 
 //add options to the button
-Arcs = ['Arc 1', 'Arc 2', 'Arc 3', 'Arc 4', 'Arc 5']
-var options = Arcs
-d3.select("#selectButton")
-                .selectAll('myOptions')
-                .data(options)
-                .enter()
-                .append('option')
-                    .text(function (d) { return d; }) // text showed in the menu
-                    .attr("value", function (d) { return d; }) // corresponding value returned by the button
+tickLabels = ['Arc 1', 'Arc 2', 'Arc 3', 'Arc 4', 'Arc 5']
 
-    
-    var tickLabels = ['Filler','Canon']
     var xScale = d3.scaleBand()
                     .domain(tickLabels)
                     .range([dimensions.margin.left ,dimensions.width - dimensions.margin.right])
-                    .padding(0.4)
+                    .padding(0.5)
 
     var yScale = d3.scaleLinear()
                     .domain([0, d3.max([m1,m2,m3,m4,m5,m6,m7,m8,m9,m10])])
@@ -412,100 +421,79 @@ d3.select("#selectButton")
                         .call(yAxisGen)
                         .style("transform", `translateX(${dimensions.margin.left}px)`)
 
+    // Another scale for subgroup position
+    var subgroups = [0,1]
+    var xSubgroup = d3.scaleBand()
+    .domain(subgroups)
+    .range([0, xScale.bandwidth()])
+    //.padding([0.04])
 
+console.log(Episodes)
+
+    var colorScale = d3.scaleOrdinal()
+                        .range(["#A93226", "#F1948A"])
 
     var bars = svg.append("g")
                     .selectAll("g")
-                    .data(Episodes[0])
+                    .data(Episodes)
+                    .enter()
+                    .append("g")
+                    .attr("transform", function(d,i) { if(i == 0){
+                                                            return "translate(" + xScale("Arc 1") + ",0)"
+                                                        }
+                                                        if(i == 1){
+                                                            return "translate(" + xScale("Arc 2") + ",0)"
+                                                        }
+                                                        if(i == 2){
+                                                            return "translate(" + xScale("Arc 3") + ",0)"
+                                                        }
+                                                        if(i == 3){
+                                                            return "translate(" + xScale("Arc 4") + ",0)"
+                                                        }
+                                                        if(i == 4){
+                                                            return "translate(" + xScale("Arc 5") + ",0)"
+                                                        }
+                                                    })
+                    .selectAll("rect")
+                    .data(function(d,i) { return Episodes[i]})
                     .enter()
                     .append("rect")
-                    .attr("fill", (d,i) => {return colorScale1(i)})
-                    .attr("x", (d,i) => {
-                                        if(i == 0){
-                                            return xScale("Filler")
-                                        }
-                                        if(i == 1){
-                                            return xScale("Canon")
-                                        }
-                                    })
+                    .attr("x", function(d,i){return xSubgroup(i)})
                     .attr("y", d => yScale(d))
                     .attr("width", d => xScale.bandwidth())
                     .attr("height", d => yScale(0) - yScale(d))
+                    .attr("fill", (d,i) => {return colorScale(i)})
 
-    
+                    
      
-                    // A function that update the chart
-    function update(selectedGroup) {
-    // Create new data with the selection
-        if(selectedGroup == 'Arc 1'){
-            var dataFilter = Episodes[0]
-        }
-        if(selectedGroup == 'Arc 2'){
-            var dataFilter = Episodes[1]
-        }
-        if(selectedGroup == 'Arc 3'){
-            var dataFilter = Episodes[2]
-        }
-        if(selectedGroup == 'Arc 4'){
-            var dataFilter = Episodes[3]
-        }
-        if(selectedGroup == 'Arc 5'){
-            var dataFilter = Episodes[4]
-        }
-    console.log(dataFilter)
-    // Give these new data to update line
-    bars
-        .data(dataFilter)
-        .transition()
-        .duration(1000)
-        .attr("fill", (d,i) => {
-            if(selectedGroup == 'Arc 1'){
-                return colorScale1(i)
-            }
-            if(selectedGroup == 'Arc 2'){
-                return colorScale2(i)
-            }
-            if(selectedGroup == 'Arc 3'){
-                return colorScale3(i)
-            }
-            if(selectedGroup == 'Arc 4'){
-                return colorScale4(i)
-            }
-            if(selectedGroup == 'Arc 5'){
-                return colorScale5(i)
-            }
-        })
-        .attr("x", (d,i) => {
-            if(i == 0){
-                return xScale("Filler")
-            }
-            if(i == 1){
-                return xScale("Canon")
-            }
-        })
-        .attr("y", d => yScale(d))
-        .attr("width", d => xScale.bandwidth())
-        .attr("height", d => yScale(0) - yScale(d))
-  }
+var size = 20
+svg.selectAll("mydots")
+  .data(Episodes[1])
+  .enter()
+  .append("rect")
+    .attr("x", 430)
+    .attr("y", function(d,i){ return 10 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+    .attr("width", size)
+    .attr("height", size)
+    .style("fill", function(d){ return colorScale(d)})
 
-
-
-
-  // When the button is changed, run the updateChart function
-  d3.select("#selectButton").on("change", function(d) {
-    // recover the option that has been chosen
-    var selectedOption = d3.select(this).property("value")
-    // run the updateChart function with this selected option
-    update(selectedOption)
- // }
-  //)
-
-
-
-  }
-  )
-
-
-
+// Add one dot in the legend for each name.
+svg.selectAll("mylabels")
+  .data(Episodes[1])
+  .enter()
+  .append("text")
+    .attr("x", 430 + size*1.2)
+    .attr("y", function(d,i){ return 10 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", function(d){ return colorScale(d)})
+    .text(function(d,i){ if(i == 0){
+                            return "Filler"
+                        }
+                        if(i == 1){
+                            return "Canon"
+                        }           
+                        })
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+                   
     }
 )
