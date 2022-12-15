@@ -447,8 +447,8 @@ d3.select("#selectButton")
     var selectedOption = d3.select(this).property("value")
     // run the updateChart function with this selected option
     update(selectedOption)
- // }
-  //)
+
+ 
   }
   )
     }
