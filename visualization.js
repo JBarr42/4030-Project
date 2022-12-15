@@ -316,7 +316,8 @@ var yAxis = svg.append("g")
                                         //stacked = function(){
   
                         var keys = Arc1.keys()
-                       
+                        //console.log(keys)
+                        //console.log(groups)
 
                         var stackedData = d3.stack()
                                 .keys(keys)
@@ -363,7 +364,54 @@ var yAxis = svg.append("g")
                                     .text("Canon Percentage Per Arc: " )
 
                                 })
-                               
+                                /*.on('click', function(d,i){
+                                        //barchart(i.data)
+
+                                        var tickLabels2 = ['Filler', 'Canon']
+                                        xScaleStack.domain(tickLabels2)
+                                        xAxisStack.transition().call(d3.axisBottom(xScaleStack))
+            
+                                        yScaleStack.domain([0, d3.max([m1,m2,m3,m4,m5, m6, m7, m8, m9, m10])])
+                                        yAxisStack.transition().call(d3.axisLeft(yScaleStack))
+            
+                                        var colorScale2 = d3.scaleOrdinal()
+                                            .domain(tickLabels2)
+                                            .range(["#A93226", "#F1948A" ])
+            
+                                       var bars2 = svg
+                                            .selectAll("rect")
+                                            .data(i.data)
+            
+                                        bars2
+                                            .enter()
+                                            .merge(bars2)
+                                            .transition()
+                                            .style("fill", (d,i) => {
+                                                if(i == 0){console.log(d);
+                                                    return colorScale2(i)
+                                                }
+                                                if(i == 1){
+                                                    return colorScale2(i)
+                                                }
+                                            })
+                                            .attr("x", (d,i) => {console.log(d);
+                                                if(i == 0){
+                                                    return xScaleStack("Filler")
+                                                }
+                                                if(i == 1){
+                                                    return xScaleStack("Canon")
+                                                }
+                                                })
+                                            .attr("y", function(d) { return yScaleStack(d)})
+                                            .attr("height", function(d) { return yScaleStack(0) - yScaleStack(d) })
+                                            .attr("width", xScaleStack.bandwidth())
+                                            
+            
+                                            bars2
+                                            .exit()
+                                            .remove()
+
+                                    })*/
                                 .attr("x", (d,i) => {
                                     if(i == 0){
                                         return xScaleStack("Arc 1")
@@ -386,7 +434,9 @@ var yAxis = svg.append("g")
                                 .attr("width", d => xScaleStack.bandwidth())
 
 
-                              
+                                /*bars
+                                .exit()
+                                .remove()*/
 
                         //Add legend
                         var size = 20
@@ -418,8 +468,47 @@ var yAxis = svg.append("g")
                                 .attr("text-anchor", "left")
                                 .style("alignment-baseline", "middle")
                        
-                    
+                           // }
+                       // })
+//stacked(stackedData)
 
+/*d3.select("#start")
+.on("click", function(){
+    var newLabels = ['Arc 1','Arc 2', 'Arc 3', 'Arc 4', 'Arc 5']
+        xScaleStack.domain(newLabels)
+        xAxisStack.transition().call(d3.axisBottom(xScaleStack))
+
+        yScaleStack.domain([0, d3.max([sum1,sum2,sum3,sum4,sum5])])
+        yAxisStack.transition().call(d3.axisLeft(yScaleStack))
+
+        bars
+        svg.selectAll("rect")
+            .data(stackedData)
+            
+        bars
+            .enter()
+            .append("rect")
+            .merge(bars)
+            .transition()
+            //.selectAll("rect")
+            //.data(stackedData)
+            /*.join(
+                enter => enter
+                    .append("rect")*/
+                    .attr("fill", d => colorScaleStack(d.key))
+
+                    /*update => update
+                    .transition().duration(1000)
+                    .style('fill','green'),
+        exit => exit
+                    .transition().duration(1000)
+                    .remove()
+            )
+       
+
+    })*/
+    
+    
     
    //BARCHART
 
@@ -552,6 +641,108 @@ var selectedOption = d3.select(this).property("value")
 update(selectedOption)
 }
 ) 
+    
+    //GROUPED BARCHART
+
+        /*var svg = d3.select("#barchart")
+                  .style("width", dimensions.width)
+                  .style("height", dimensions.height)
+                  
+
+//add options to the button
+tickLabels = ['Filler', 'Canon']
+
+    var xScale = d3.scaleBand()
+                    .domain(tickLabels)
+                    .range([dimensions.margin.left ,dimensions.width - dimensions.margin.right])
+                    .padding(0.5)
+
+    var yScale = d3.scaleLinear()
+                    .domain([0, d3.max([m1,m2,m3,m4,m5,m6,m7,m8,m9,m10])])
+                    .range([dimensions.height-dimensions.margin.bottom, dimensions.margin.top])
+
+    //adds axes to the chart
+    var xAxisGen = d3.axisBottom().scale(xScale)
+    var xAxis = svg.append("g")
+                    .call(xAxisGen)
+                    .style("transform", `translateY(${dimensions.height-dimensions.margin.bottom}px)`)
+
+    var yAxisGen = d3.axisLeft().scale(yScale)
+    var yAxis = svg.append("g")
+                        .call(yAxisGen)
+                        .style("transform", `translateX(${dimensions.margin.left}px)`)
+
+    // Another scale for subgroup position
+    //var subgroups = [0,1]
+    //var xSubgroup = d3.scaleBand()
+    //.domain(subgroups)
+    //.range([0, xScale.bandwidth()])
+    //.padding([0.04])
+
+console.log(Episodes)
+
+    var colorScale = d3.scaleOrdinal()
+                        .range(["#A93226", "#F1948A"])
+
+
+                            var u = svg.selectAll("rect")
+                              .data(Episodes[0])
+                          
+                            u
+                              .enter()
+                              .append("rect")
+                              .merge(u)
+                              .transition()
+                              .duration(1000)
+                                .attr("x", function(d,i) { if(i == 0){
+                                                                return xScale("Filler")
+                                                            }
+                                                            if(i == 1){
+                                                                return xScale("Canon")
+                                                            } 
+                                                        })
+                                .attr("y", function(d) { return y(d)})
+                                .attr("width", x.bandwidth())
+                                .attr("height", function(d) { return height - y(d.value); })
+                                .attr("fill", "#69b3a2")
+                          
+                          
+                          // Initialize the plot with the first dataset
+                          changeArc(data1)
+
+
+   
+
+                    
+     
+var size = 20
+svg.selectAll("mydots")
+  .data(Episodes[1])
+  .enter()
+  .append("rect")
+    .attr("x", 430)
+    .attr("y", function(d,i){ return 10 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+    .attr("width", size)
+    .attr("height", size)
+    .style("fill", function(d){ return colorScale(d)})
+
+// Add one dot in the legend for each name.
+svg.selectAll("mylabels")
+  .data(Episodes[1])
+  .enter()
+  .append("text")
+    .attr("x", 430 + size*1.2)
+    .attr("y", function(d,i){ return 10 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", function(d){ return colorScale(d)})
+    .text(function(d,i){ if(i == 0){
+                            return "Filler"
+                        }
+                        if(i == 1){
+                            return "Canon"
+                        }           
+                        })
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")*/
                    
     }
 )
